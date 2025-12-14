@@ -1,1 +1,1 @@
-# StructMol
+# SubMol-Instructions
