@@ -2,13 +2,25 @@
 
 **MolSC: Leveraging Substituent Contributions to Enhance Fine-grained Molecular Understanding in LLMs**
 
-Training & Evaluation data: https://drive.google.com/drive/folders/1pYA3kC6dNbHntTIAn2buA0_hnEKPUzFf?usp=sharing
+<p align="left">
+  <a href="https://2026.emnlp.org/"><img src="https://img.shields.io/badge/EMNLP%202026-Main-blue.svg" alt="EMNLP 2026 Main"></a>
+  <a href="https://drive.google.com/drive/folders/1pYA3kC6dNbHntTIAn2buA0_hnEKPUzFf?usp=sharing"><img src="https://img.shields.io/badge/Data-Google%20Drive-4285F4.svg" alt="Data"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-Apache%202.0-green.svg" alt="License"></a>
+</p>
 
-Inference examples and codes for evaluation is in the `MolSC-Bench` folder.
+> Official code and data for our paper accepted to **EMNLP 2026 (Main Conference)**.
 
-We use [LLaMA-Factory](https://github.com/hiyouga/LLaMA-Factory) for training. For requirements and installation, please refer to the LLaMA-Factory repository.
+## Data
+
+Training and evaluation data are available here:
+[Google Drive](https://drive.google.com/drive/folders/1pYA3kC6dNbHntTIAn2buA0_hnEKPUzFf?usp=sharing)
 
 ## Training
+
+We use [LLaMA-Factory](https://github.com/hiyouga/LLaMA-Factory) for training.
+For requirements and installation, please refer to the LLaMA-Factory repository.
+
+`mol_sft.yaml`:
 
 ```yaml
 ### model
@@ -60,3 +72,34 @@ neat_packing: true
 ```bash
 llamafactory-cli train mol_sft.yaml
 ```
+
+## Evaluation
+
+Inference examples and the evaluation code are in the `MolSC-Bench` folder.
+
+```
+MolSC-Bench/
+├── eval_molsc_bench.py                 # evaluation script
+├── task1_with_gpt_responses.json       # inference examples (GPT-5.2)
+├── task2_with_gpt_responses.json
+├── task1_with_gemini_responses.json    # inference examples (Gemini-3-Flash)
+└── task2_with_gemini_responses.json
+```
+
+Each entry keeps the benchmark fields (`prompt`, `gt`, ...) together with the
+model output in `response`. To evaluate your own outputs, save them in the same
+format and run:
+
+```bash
+python MolSC-Bench/eval_molsc_bench.py \
+    task1_with_your_model_responses.json \
+    task2_with_your_model_responses.json
+```
+
+Files whose names contain `task1` are scored with the Task 1 metrics, and all
+others with the Task 2 metrics:
+
+| Task | Metrics |
+| --- | --- |
+| Task 1: Property Profiling | SR (%), propMAE ↓, alertAcc ↑, bioMAE ↓ |
+| Task 2: Substituent Contribution Prediction | SR (%), ΔpropMAE ↓, ΔalertAcc ↑, ΔbioMAE ↓, dirAcc ↑ |
