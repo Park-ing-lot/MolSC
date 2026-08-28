@@ -2,9 +2,9 @@
 
 **MolSC: Leveraging Substituent Contributions to Enhance Fine-grained Molecular Understanding in LLMs**
 
-Training data: https://drive.google.com/drive/folders/1pYA3kC6dNbHntTIAn2buA0_hnEKPUzFf?usp=sharing
+Training & Evaluation data: https://drive.google.com/drive/folders/1pYA3kC6dNbHntTIAn2buA0_hnEKPUzFf?usp=sharing
 
-Evaluation data is in the `MolSC-Bench` folder.
+Inference examples and codes for evaluation is in the `MolSC-Bench` folder.
 
 We use [LLaMA-Factory](https://github.com/hiyouga/LLaMA-Factory) for training. For requirements and installation, please refer to the LLaMA-Factory repository.
 
